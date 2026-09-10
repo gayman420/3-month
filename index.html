@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Maham</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --plum: #241220;
+    --ivory: #FAF3EC;
+    --ink: #2B1620;
+    --ink-soft: rgba(43,22,32,0.45);
+    --gold: #C9A15A;
+    --blush: #E45C79;
+    --blush-soft: #f0c3cd;
+  }
+
+  *{ box-sizing: border-box; }
+  html, body{ height: 100%; margin: 0; }
+
+  body{
+    background:
+      radial-gradient(ellipse at 18% 12%, rgba(232,162,176,0.10), transparent 55%),
+      radial-gradient(ellipse at 82% 88%, rgba(201,161,90,0.10), transparent 55%),
+      var(--plum);
+    color: var(--ivory);
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: relative;
+  }
+
+  .bg-pattern{
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.5;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg transform='translate(24,26) rotate(-10)'%3E%3Cellipse cx='0' cy='-13' rx='6' ry='9' fill='%23E45C79' opacity='0.55'/%3E%3Cellipse cx='0' cy='13' rx='6' ry='9' fill='%23E45C79' opacity='0.55'/%3E%3Cellipse cx='-13' cy='0' rx='9' ry='6' fill='%23E45C79' opacity='0.55'/%3E%3Cellipse cx='13' cy='0' rx='9' ry='6' fill='%23E45C79' opacity='0.55'/%3E%3Ccircle cx='0' cy='0' r='6' fill='%23C9A15A' opacity='0.7'/%3E%3C/g%3E%3Cg transform='translate(140,52) rotate(16)'%3E%3Cpath d='M0 -14c8 0 14 8 14 17 0 10-14 20-14 20S-14 21-14-9C-14-18-8-14 0-14z' fill='%23E45C79' opacity='0.45'/%3E%3Ccircle cx='-4' cy='2' r='1.4' fill='%23FAF3EC' opacity='0.6'/%3E%3Ccircle cx='4' cy='6' r='1.4' fill='%23FAF3EC' opacity='0.6'/%3E%3Ccircle cx='0' cy='14' r='1.4' fill='%23FAF3EC' opacity='0.6'/%3E%3Cpath d='M-6 -13 L0 -20 L6 -13 Z' fill='%237C9A6B' opacity='0.5'/%3E%3C/g%3E%3Cg transform='translate(52,120) rotate(6)'%3E%3Cellipse cx='0' cy='-13' rx='6' ry='9' fill='%23C9A15A' opacity='0.4'/%3E%3Cellipse cx='0' cy='13' rx='6' ry='9' fill='%23C9A15A' opacity='0.4'/%3E%3Cellipse cx='-13' cy='0' rx='9' ry='6' fill='%23C9A15A' opacity='0.4'/%3E%3Cellipse cx='13' cy='0' rx='9' ry='6' fill='%23C9A15A' opacity='0.4'/%3E%3Ccircle cx='0' cy='0' r='6' fill='%23E45C79' opacity='0.55'/%3E%3C/g%3E%3Cg transform='translate(128,150) rotate(-20)'%3E%3Cpath d='M0 -11c6.5 0 11 6.5 11 13.5 0 8-11 16-11 16S-11 10.5-11-3.5C-11-14.5-6.5-11 0-11z' fill='%23E45C79' opacity='0.4'/%3E%3Ccircle cx='-3' cy='1.5' r='1.1' fill='%23FAF3EC' opacity='0.55'/%3E%3Ccircle cx='3' cy='5' r='1.1' fill='%23FAF3EC' opacity='0.55'/%3E%3Cpath d='M-5 -10 L0 -16 L5 -10 Z' fill='%237C9A6B' opacity='0.45'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: clamp(120px, 24vw, 180px) clamp(120px, 24vw, 180px);
+  }
+
+  .stage{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(8px, 2vh, 22px);
+    padding: clamp(10px, 3vw, 24px);
+    z-index: 2;
+    width: 100%;
+  }
+
+  .eyebrow{
+    font-size: 13px;
+    color: var(--blush-soft);
+    opacity: 0.85;
+  }
+
+  .book{
+    perspective: 2200px;
+    width: min(300px, 76vw, 34vh);
+    position: relative;
+  }
+
+  .binder{
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+  }
+  .binder .ring{
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--ivory);
+    opacity: 0.55;
+  }
+
+  .pages{
+    position: relative;
+    width: 100%;
+    aspect-ratio: 340 / 400;
+    transform-style: preserve-3d;
+  }
+
+  .page{
+    position: absolute;
+    inset: 0;
+    background: var(--ivory);
+    color: var(--ink);
+    border-radius: 4px 14px 14px 4px;
+    box-shadow:
+      0 30px 60px -20px rgba(0,0,0,0.55),
+      0 0 0 1px rgba(0,0,0,0.04);
+    transform-origin: top center;
+    backface-visibility: hidden;
+    transition: transform 0.55s cubic-bezier(.55,0,.35,1), opacity 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    padding: clamp(14px, 5vw, 22px) clamp(12px, 4.5vw, 20px) clamp(10px, 3.5vw, 18px);
+    cursor: pointer;
+  }
+
+  .page.flipped{
+    transform: scaleY(0.05) translateY(-6%);
+    opacity: 0;
+  }
+
+  .page .month-head{
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    border-bottom: 1px solid rgba(43,22,32,0.12);
+    padding-bottom: 10px;
+  }
+
+  .forever-page{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-style: italic;
+    font-size: clamp(26px, 9vw, 38px);
+    color: var(--ink);
+    letter-spacing: 0.5px;
+  }
+
+  .photos-row{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(10px, 4vw, 28px);
+    width: 100%;
+  }
+
+  .polaroid{
+    flex: 0 0 auto;
+    width: clamp(112px, 30vw, 220px);
+    background: var(--ivory);
+    padding: clamp(7px, 2vw, 14px) clamp(7px, 2vw, 14px) clamp(16px, 4.5vw, 34px);
+    border-radius: 3px;
+    box-shadow:
+      0 25px 45px -15px rgba(0,0,0,0.5),
+      0 0 0 1px rgba(0,0,0,0.04);
+    z-index: 3;
+  }
+  .polaroid img{
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: 2px;
+    background: rgba(43,22,32,0.08);
+  }
+  .polaroid.left{ transform: rotate(-8deg); }
+  .polaroid.right{ transform: rotate(7deg); }
+
+  .book-wrap{
+    position: relative;
+  }
+
+  .page .month-name{
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: clamp(19px, 6vw, 27px);
+  }
+
+  .page .year{
+    font-size: clamp(11px, 3vw, 13px);
+    color: var(--ink-soft);
+  }
+
+  .weekdays{
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    margin-bottom: 6px;
+  }
+  .weekdays span{
+    text-align: center;
+    font-size: clamp(9px, 2.6vw, 11px);
+    color: var(--ink-soft);
+    font-weight: 600;
+  }
+
+  .grid{
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-auto-rows: 1fr;
+    gap: 2px;
+  }
+
+  .cell{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(11px, 3vw, 13px);
+    color: var(--ink);
+    position: relative;
+  }
+  .cell.empty{ visibility: hidden; }
+
+  .cell.marked span{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: clamp(23px, 7vw, 30px);
+    height: clamp(23px, 7vw, 30px);
+    border-radius: 50%;
+    background: var(--blush);
+    color: var(--ivory);
+    font-weight: 600;
+  }
+
+  .cell.today span{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: clamp(23px, 7vw, 30px);
+    height: clamp(23px, 7vw, 30px);
+    border-radius: 50%;
+    border: 1.5px solid var(--gold);
+    font-weight: 600;
+  }
+
+  .hint{
+    font-size: 14px;
+    color: rgba(250,243,236,0.55);
+    text-align: center;
+    min-height: 20px;
+    transition: opacity 0.5s ease;
+  }
+
+  .message{
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: clamp(16px, 4.3vw, 21px);
+    text-align: center;
+    max-width: min(380px, 90vw);
+    line-height: 1.45;
+    min-height: clamp(90px, 20vh, 260px);
+    overflow: visible;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 6px;
+    opacity: 0;
+    transform: translateY(10px);
+    filter: blur(5px);
+    transition:
+      opacity 1s cubic-bezier(.22,.61,.36,1),
+      transform 1s cubic-bezier(.22,.61,.36,1),
+      filter 1s cubic-bezier(.22,.61,.36,1);
+  }
+  .message .msg-inner{ max-width: 100%; }
+  .message.show{ opacity: 1; transform: translateY(0); filter: blur(0); }
+  .message .accent{ color: var(--blush-soft); font-style: italic; }
+  .message .small{ font-size: clamp(13px, 3.6vw, 15px); line-height: 1.55; display: block; }
+
+  .petal{
+    position: absolute;
+    top: -20px;
+    border-radius: 50% 0 50% 50%;
+    pointer-events: none;
+    z-index: 1;
+    animation: fall linear forwards;
+  }
+  @keyframes fall{
+    to{ transform: translateY(110vh) rotate(420deg); opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .page{ transition: none; }
+    .petal{ display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-pattern"></div>
+
+<div class="stage">
+  <div class="eyebrow">for Maham</div>
+
+  <div class="photos-row">
+    <div class="polaroid left"><img src="1.jpg" alt=""></div>
+    <div class="polaroid right"><img src="2.jpg" alt=""></div>
+  </div>
+
+  <div class="book-wrap">
+    <div class="book">
+      <div class="binder">
+        <span class="ring"></span><span class="ring"></span><span class="ring"></span><span class="ring"></span>
+      </div>
+      <div class="pages" id="pages"></div>
+    </div>
+  </div>
+
+  <div class="hint" id="hint"></div>
+
+  <div class="message" id="message"></div>
+</div>
+
+<script>
+  // Build the month sequence from June 2026 back to Nov 2024, one page per month.
+  const START = { year: 2026, monthIndex: 9 }; // October 2026 (used as the "Forever" page)
+  const END   = { year: 2024, monthIndex: 10 }; // November
+
+  const MSG_JUNE   = 'Eleventh of June, the day you became <span class="accent">mine</span>, but perhaps our story goes back way further.';
+  const MSG_NOV    = 'We met at <span class="accent">WUCON</span>. I thought you were the prettiest girl I\u2019d ever seen, and however many times you could send me back, I\u2019d say the same thing: seeing you was like waking up for the first time, <span class="accent">seeing you was like being alive.</span>';
+  const MSG_TALKED = 'We talked for a long time. Friends at first, then super good friends, then <span class="accent">best friends even</span>. We both felt no one understood us like each other.';
+  const MSG_ENIGMA = 'This was the day we met at <span class="accent">Enigma</span>. We\u2019d met before, but this was our first proper meeting. I was so happy I got to experience that. Thank you, Maham, I had a blast.';
+  const MSG_GEEKCON = 'Then we kinda met at <span class="accent">GeekCon</span>, but you didn\u2019t have a great time. I\u2019m sorry about that, but it was nice to see you.';
+  const MSG_OCEAN   = 'We went to <span class="accent">Ocean Mall</span>. It was so incredibly fun, I loved every moment with you, and I did not want to go home. Every moment I was with you, my heart would flutter.';
+  const MSG_ASKEDOUT = 'This is the day I <span class="accent">asked you out</span>. Things were a bit complicated, but deep down we loved each other. It was just so scary to try and put our faith in each other.';
+  const MSG_RETURN = 'And so we\u2019re back, to the day you made me so incredibly happy. Thank you for choosing to love me, Maham, but <span class="accent">we\u2019re not done yet</span>.';
+  const MSG_FIRSTDATE = 'Our <span class="accent">first date</span>. Holding hands with you, and getting to finally be close to you, it felt like a dream come true.';
+  const MSG_SECONDDATE = 'Our <span class="accent">second date</span>, the perfect date, just me and you and some privacy, so I could just be close to you and love you, and it was so perfect.';
+  const MSG_THIRDDATE = 'Our <span class="accent">third date</span>, and to many more, I want to meet you all the time, as much as I can, because being with you soothes me, Maham.';
+  const MSG_SEPT = 'Our <span class="accent">3 month anniversary</span>. These have been some of the happiest 3 months of my life, purely because I get to be yours and I get to call you mine. You are an angel that has been sent to me, you are beautiful, stunning, perfect, and I love you so, and I want to grow old with you and I want to be with you forever, my beautiful perfect girl <3';
+  const MSG_FUTURE = '<span class="small">Our calendar isn\u2019t even close to over yet. I wonder what dates we\u2019ll get to mark in the future, I wonder what dates we\u2019ll meet, until the day when we can mark every single day as a day we met. I want to kiss you and hold you and cuddle with you, I want to do so much with you my beloved, and I will never let you go, ever. I want to be with you forever, and I know you do too, Maham. So thank you for loving me, thank you for choosing me, and thank you for wanting to grow old with me.</span>';
+
+  const months = [];
+  let cursor = new Date(START.year, START.monthIndex, 1);
+  const stopDate = new Date(END.year, END.monthIndex, 1);
+  while (cursor >= stopDate) {
+    const y = cursor.getFullYear();
+    const mIdx = cursor.getMonth();
+    const entry = { year: y, monthIndex: mIdx, markDays: [] };
+    if (y === 2026 && mIdx === 5) entry.markDays = [11];
+    if (y === 2026 && mIdx === 0) entry.markDays = [8, 9];
+    if (y === 2024 && mIdx === 10) entry.markDays = [23];
+    months.push(entry);
+    cursor.setMonth(cursor.getMonth() - 1);
+  }
+
+  const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+  const pagesEl = document.getElementById('pages');
+  const hint = document.getElementById('hint');
+  const message = document.getElementById('message');
+
+  months.forEach((m, i) => {
+    const page = document.createElement('div');
+    page.className = 'page';
+    page.style.zIndex = months.length - i;
+
+    const isForeverPage = (m.year === 2026 && m.monthIndex === 9);
+
+    if (isForeverPage) {
+      const forever = document.createElement('div');
+      forever.className = 'forever-page';
+      forever.textContent = 'Forever';
+      page.appendChild(forever);
+      page.addEventListener('click', handleClick);
+      pagesEl.appendChild(page);
+      return;
+    }
+
+    const head = document.createElement('div');
+    head.className = 'month-head';
+    head.innerHTML = `<span class="month-name">${MONTH_NAMES[m.monthIndex]}</span><span class="year">${m.year}</span>`;
+    page.appendChild(head);
+
+    const weekdays = document.createElement('div');
+    weekdays.className = 'weekdays';
+    ['S','M','T','W','T','F','S'].forEach(d => {
+      const s = document.createElement('span');
+      s.textContent = d;
+      weekdays.appendChild(s);
+    });
+    page.appendChild(weekdays);
+
+    const grid = document.createElement('div');
+    grid.className = 'grid';
+    const firstDay = new Date(m.year, m.monthIndex, 1).getDay();
+    const daysInMonth = new Date(m.year, m.monthIndex + 1, 0).getDate();
+    for (let i2 = 0; i2 < firstDay; i2++) {
+      const empty = document.createElement('div');
+      empty.className = 'cell empty';
+      grid.appendChild(empty);
+    }
+    for (let d = 1; d <= daysInMonth; d++) {
+      const cell = document.createElement('div');
+      cell.className = 'cell';
+      const span = document.createElement('span');
+      span.textContent = d;
+      if (m.markDays.includes(d)) cell.classList.add('marked');
+      cell.dataset.day = d;
+      cell.appendChild(span);
+      grid.appendChild(cell);
+    }
+    page.appendChild(grid);
+
+    page.addEventListener('click', handleClick);
+    pagesEl.appendChild(page);
+  });
+
+  const pageEls = pagesEl.querySelectorAll('.page');
+  const futureIndex = months.findIndex(m => m.year === 2026 && m.monthIndex === 9);
+  const sepIndex  = months.findIndex(m => m.year === 2026 && m.monthIndex === 8);
+  const julyIndex = months.findIndex(m => m.year === 2026 && m.monthIndex === 6);
+  const augIndex  = months.findIndex(m => m.year === 2026 && m.monthIndex === 7);
+  const juneIndex = months.findIndex(m => m.year === 2026 && m.monthIndex === 5);
+  const novIndex  = months.findIndex(m => m.year === 2024 && m.monthIndex === 10);
+  const janIndex  = months.findIndex(m => m.year === 2026 && m.monthIndex === 0);
+  const aprIndex  = months.findIndex(m => m.year === 2026 && m.monthIndex === 3);
+  const mayIndex  = months.findIndex(m => m.year === 2026 && m.monthIndex === 4);
+
+  // July/Aug/Sept sit "ahead" of June in the stack (lower index = more
+  // recent), so hide them instantly at load -- no transition -- leaving
+  // June as the visible starting page, matching the opening narration.
+  for (let i = 0; i < juneIndex; i++) {
+    const el = pageEls[i];
+    el.style.transition = 'none';
+    el.classList.add('flipped');
+  }
+  void pagesEl.offsetWidth; // flush the instant hide before re-enabling transitions
+  for (let i = 0; i < juneIndex; i++) {
+    pageEls[i].style.transition = '';
+  }
+
+  // The journey the taps walk through, in order.
+  const journey = [
+    { index: novIndex, delay: 70,  duringMessage: null,       finalMessage: MSG_NOV },
+    { index: janIndex, delay: 380, duringMessage: MSG_TALKED, finalMessage: MSG_ENIGMA },
+    { index: janIndex, delay: 380, duringMessage: null,       finalMessage: MSG_GEEKCON, markDayOnArrival: 24 },
+    { index: aprIndex, delay: 380, duringMessage: null,       finalMessage: MSG_OCEAN,   markDayOnArrival: 22 },
+    { index: mayIndex, delay: 380, duringMessage: null,       finalMessage: MSG_ASKEDOUT, markDayOnArrival: 23 },
+    { index: juneIndex, delay: 380, duringMessage: null,      finalMessage: MSG_RETURN },
+    { index: julyIndex, delay: 380, duringMessage: null,      finalMessage: MSG_FIRSTDATE, markDayOnArrival: 1 },
+    { index: augIndex,  delay: 380, duringMessage: null,      finalMessage: MSG_SECONDDATE, markDayOnArrival: 5 },
+    { index: sepIndex,  delay: 380, duringMessage: null,      finalMessage: MSG_THIRDDATE, markDayOnArrival: 9 },
+    { index: sepIndex,  delay: 380, duringMessage: null,      finalMessage: MSG_SEPT, markDayOnArrival: 11 },
+    { index: futureIndex, delay: 18, duringMessage: MSG_FUTURE, finalMessage: MSG_FUTURE }
+  ];
+  let journeyPointer = 0;
+
+  let step = juneIndex;
+  let locked = false;
+  let finished = false;
+
+  function spawnPetals(count){
+    const colors = ['#E45C79', '#C9A15A', '#f0c3cd'];
+    for(let i = 0; i < count; i++){
+      const p = document.createElement('div');
+      p.className = 'petal';
+      p.style.left = Math.random() * 100 + 'vw';
+      p.style.background = colors[Math.floor(Math.random() * colors.length)];
+      const size = 6 + Math.random() * 8;
+      p.style.width = size + 'px';
+      p.style.height = size + 'px';
+      p.style.animationDuration = (3.5 + Math.random() * 2.5) + 's';
+      p.style.animationDelay = (Math.random() * 0.6) + 's';
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 7500);
+    }
+  }
+
+  function showMessage(html){
+    const wrapped = `<div class="msg-inner">${html}</div>`;
+    const hasContent = !!message.innerHTML;
+    if (hasContent) {
+      message.classList.remove('show');
+      setTimeout(() => {
+        message.innerHTML = wrapped;
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => message.classList.add('show'));
+        });
+      }, 850);
+    } else {
+      message.innerHTML = wrapped;
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => message.classList.add('show'));
+      });
+    }
+  }
+
+  // Opening state: June is already on top, mark and message appear on load.
+  hint.textContent = '';
+  setTimeout(() => {
+    spawnPetals(18);
+    showMessage(MSG_JUNE);
+    setTimeout(() => {
+      hint.textContent = 'tap to go further back';
+      hint.style.opacity = '1';
+    }, 900);
+  }, 500);
+
+  // Flips pages one at a time from `fromIndex` to `toIndex` (either direction),
+  // optionally surfacing a message partway through, then calls onDone.
+  function cascade(fromIndex, toIndex, delay, duringMsg, onDone){
+    const opening = toIndex > fromIndex;
+    const steps = [];
+    if (opening) {
+      for (let i = fromIndex; i < toIndex; i++) steps.push(i);
+    } else {
+      for (let i = fromIndex - 1; i >= toIndex; i--) steps.push(i);
+    }
+
+    let idx = 0;
+    let duringShown = false;
+
+    function next(){
+      if (idx >= steps.length) { onDone(); return; }
+      const i = steps[idx];
+      if (opening) pageEls[i].classList.add('flipped');
+      else pageEls[i].classList.remove('flipped');
+      idx++;
+
+      if (duringMsg && !duringShown) {
+        duringShown = true;
+        showMessage(duringMsg);
+      }
+
+      setTimeout(next, delay);
+    }
+    next();
+  }
+
+  function handleClick(){
+    if (locked || finished || journeyPointer >= journey.length) return;
+    locked = true;
+    hint.style.opacity = '0';
+
+    const stopDef = journey[journeyPointer];
+    journeyPointer++;
+
+    cascade(step, stopDef.index, stopDef.delay, stopDef.duringMessage, () => {
+      step = stopDef.index;
+      setTimeout(() => {
+        if (stopDef.markDayOnArrival) {
+          const cell = pageEls[stopDef.index].querySelector(`.cell[data-day="${stopDef.markDayOnArrival}"]`);
+          if (cell) cell.classList.add('marked');
+        }
+        spawnPetals(26);
+        showMessage(stopDef.finalMessage);
+        locked = false;
+        if (journeyPointer >= journey.length) {
+          finished = true;
+          hint.textContent = '';
+        } else {
+          hint.textContent = 'tap to go further back';
+          hint.style.opacity = '1';
+        }
+      }, 550);
+    });
+  }
+</script>
+
+</body>
+</html>
