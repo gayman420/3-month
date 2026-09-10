@@ -269,6 +269,107 @@
   .message .accent{ color: var(--blush-soft); font-style: italic; }
   .message .small{ font-size: clamp(13px, 3.6vw, 15px); line-height: 1.55; display: block; }
 
+  .stage{
+    transition: opacity 1.1s ease;
+  }
+  .stage.fade-out{
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .final-overlay{
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(18px, 6vw, 48px);
+    background:
+      radial-gradient(ellipse at 20% 15%, rgba(232,162,176,0.14), transparent 55%),
+      radial-gradient(ellipse at 80% 85%, rgba(201,161,90,0.14), transparent 55%),
+      var(--plum);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1.4s cubic-bezier(.22,.61,.36,1);
+  }
+  .final-overlay.show{
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .final-note{
+    position: relative;
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: clamp(14.5px, 3.4vw, 18px);
+    line-height: 1.85;
+    color: var(--ink);
+    text-align: center;
+    max-width: min(480px, 90vw);
+    background: var(--ivory);
+    border-radius: 8px;
+    padding: clamp(38px, 8vw, 58px) clamp(28px, 7vw, 46px) clamp(30px, 6vw, 44px);
+    box-shadow:
+      0 50px 90px -24px rgba(0,0,0,0.65),
+      0 0 0 1px rgba(0,0,0,0.05);
+    transform: scale(0.92) translateY(14px);
+    opacity: 0;
+    transition:
+      opacity 1.3s cubic-bezier(.22,.61,.36,1),
+      transform 1.3s cubic-bezier(.22,.61,.36,1);
+  }
+  .final-overlay.show .final-note{
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+
+  .final-note::before{
+    content: '';
+    position: absolute;
+    top: 14px; left: 50%;
+    transform: translateX(-50%);
+    width: 46px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  .note-label{
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 6px 0 20px;
+  }
+
+  .note-mark{
+    display: block;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: clamp(38px, 9vw, 54px);
+    line-height: 0.5;
+    color: var(--blush-soft);
+    margin-bottom: 10px;
+  }
+
+  .note-text{ margin: 0; }
+
+  .note-mark-end{
+    margin-top: 8px;
+    margin-bottom: 0;
+  }
+
+  .note-heart{
+    display: block;
+    margin-top: 22px;
+    font-size: 15px;
+    letter-spacing: 4px;
+    color: var(--blush);
+  }
+
   .petal{
     position: absolute;
     top: -20px;
@@ -313,6 +414,16 @@
   <div class="message" id="message"></div>
 </div>
 
+<div class="final-overlay" id="finalOverlay">
+  <div class="final-note">
+    <span class="note-label">for Maham</span>
+    <span class="note-mark">&ldquo;</span>
+    <p class="note-text" id="finalNoteText"></p>
+    <span class="note-mark note-mark-end">&rdquo;</span>
+    <span class="note-heart">&#10022; &#10022; &#10022;</span>
+  </div>
+</div>
+
 <script>
   // Build the month sequence from June 2026 back to Nov 2024, one page per month.
   const START = { year: 2026, monthIndex: 9 }; // October 2026 (used as the "Forever" page)
@@ -331,6 +442,7 @@
   const MSG_THIRDDATE = 'Our <span class="accent">third date</span>, and to many more, I want to meet you all the time, as much as I can, because being with you soothes me, Maham.';
   const MSG_SEPT = 'Our <span class="accent">3 month anniversary</span>. These have been some of the happiest 3 months of my life, purely because I get to be yours and I get to call you mine. You are an angel that has been sent to me, you are beautiful, stunning, perfect, and I love you so, and I want to grow old with you and I want to be with you forever, my beautiful perfect girl <3';
   const MSG_FUTURE = '<span class="small">Our calendar isn\u2019t even close to over yet. I wonder what dates we\u2019ll get to mark in the future, I wonder what dates we\u2019ll meet, until the day when we can mark every single day as a day we met. I want to kiss you and hold you and cuddle with you, I want to do so much with you my beloved, and I will never let you go, ever. I want to be with you forever, and I know you do too, Maham. So thank you for loving me, thank you for choosing me, and thank you for wanting to grow old with me.</span>';
+  const FINAL_NOTE = 'Maham, you are my other half, there is no one in this world for me except you, you are my everything, you are so sweet, so kind, so helpful, so generous, so incredible, so beautiful, so perfect, you make me so happy and I want to spend my entire life with you, I have never been so sure in my life, I pray we get through all the hard times, all the boring times, and choose to love each other every single day, because we will always have each other, you are my favourite girl, my best girl, and I want to give you everything, thank you for being you, my beloved.';
 
   const months = [];
   let cursor = new Date(START.year, START.monthIndex, 1);
@@ -351,6 +463,9 @@
   const pagesEl = document.getElementById('pages');
   const hint = document.getElementById('hint');
   const message = document.getElementById('message');
+  const finalOverlay = document.getElementById('finalOverlay');
+  const finalNoteText = document.getElementById('finalNoteText');
+  const stageEl = document.querySelector('.stage');
 
   months.forEach((m, i) => {
     const page = document.createElement('div');
@@ -551,6 +666,13 @@
         if (journeyPointer >= journey.length) {
           finished = true;
           hint.textContent = '';
+          setTimeout(() => {
+            stageEl.classList.add('fade-out');
+            setTimeout(() => {
+              finalNoteText.textContent = FINAL_NOTE;
+              finalOverlay.classList.add('show');
+            }, 700);
+          }, 3200);
         } else {
           hint.textContent = 'tap to go further back';
           hint.style.opacity = '1';
